@@ -100,23 +100,24 @@ http.get('data.json')
 
 
     // ----------------------------------------------- Event Listener for Selecting User
-    document.getElementById('book-list').addEventListener('click', (e) =>  {
-
-      // Clear fields
-      document.getElementById('friends-list').innerHTML = '';
-      document.getElementById('direct-friends-list').innerHTML = '';
-      document.getElementById('suggested-friends-list').innerHTML = '';
-
-      // Style
-      const bg = document.querySelectorAll('.users tr');
-      bg.forEach((td) => {
-        td.className = '';
-      });
+    document.getElementById('book-list').addEventListener('click', (e) => {
 
 
-      
       if (e.target.classList.contains('select')) {
-        
+
+
+        // Clear fields
+        document.getElementById('friends-list').innerHTML = '';
+        document.getElementById('direct-friends-list').innerHTML = '';
+        document.getElementById('suggested-friends-list').innerHTML = '';
+
+        // Style
+        const bg = document.querySelectorAll('.users tr');
+        bg.forEach((td) => {
+          td.className = '';
+        });
+
+
         e.target.parentElement.parentElement.className = 'bg-dark';
 
 
@@ -148,9 +149,9 @@ http.get('data.json')
         selectedObject.friends.forEach((friends) => {
           niz.push(users[friends - 1].id);
         });
-  
+
         let niz1 = [];
-  
+
         niz.forEach((friend) => {
           users[friend - 1].friends.forEach((fr) => {
             if (niz1.indexOf(fr) == -1) {
@@ -158,29 +159,29 @@ http.get('data.json')
             }
           });
         });
-  
+
         niz1.forEach((fr) => {
-  
+
           if (fr == selectedId) {
             niz1.splice(niz1.indexOf(fr), 1);
           }
-  
+
         });
-  
+
         niz.forEach((fr1) => {
           niz1.forEach((fr) => {
-  
+
             if (fr === selectedId) {
               niz1.splice(niz1.indexOf(fr), 1);
             }
-  
+
             if (fr === fr1) {
               niz1.splice(niz1.indexOf(fr), 1);
             }
-  
+
           });
         });
-  
+
         niz1.forEach((suggested) => {
           const id = users[suggested - 1].id,
             firstName = users[suggested - 1].firstName,
@@ -206,14 +207,14 @@ http.get('data.json')
 
         let arr1 = [];
         arr.forEach((user) => {
-          
+
           let x = 0;
           user.friends.forEach((id) => {
 
             if (selectedId === id) {
               x = 1;
             }
-            
+
           });
 
           if (x === 0) {
@@ -221,13 +222,13 @@ http.get('data.json')
           }
 
         });
- 
+
         arr1.splice(arr1.indexOf(selectedObject), 1);
 
 
         let suggestedFriendsArray = [];
         arr1.forEach((user) => {
-          
+
           let x = 0;
           user.friends.forEach((fost) => {
 
