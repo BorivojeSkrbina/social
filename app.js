@@ -221,8 +221,8 @@ http.get('data.json')
           }
 
         });
-
-        arr1.splice(users, 1);
+ 
+        arr1.splice(arr1.indexOf(selectedObject), 1);
 
 
         let suggestedFriendsArray = [];
