@@ -145,46 +145,43 @@ http.get('data.json')
 
         // ------------------------------------------------- Friends of friends Loop
         let niz = [];
-        selectedObject.friends.forEach(function (friends) {
+        selectedObject.friends.forEach((friends) => {
           niz.push(users[friends - 1].id);
         });
   
         let niz1 = [];
   
-        niz.forEach(function (friend) {
-          users[friend - 1].friends.forEach(function (fr) {
+        niz.forEach((friend) => {
+          users[friend - 1].friends.forEach((fr) => {
             if (niz1.indexOf(fr) == -1) {
               niz1.push(fr);
             }
           });
         });
   
-        niz1.forEach(function (fr) {
+        niz1.forEach((fr) => {
   
           if (fr == selectedId) {
-            var a = niz1.indexOf(fr);
-            niz1.splice(a, 1);
+            niz1.splice(niz1.indexOf(fr), 1);
           }
   
         });
   
-        niz.forEach(function (fr1) {
-          niz1.forEach(function (fr) {
+        niz.forEach((fr1) => {
+          niz1.forEach((fr) => {
   
             if (fr === selectedId) {
-              var a = niz1.indexOf(fr);
-              niz1.splice(a, 1);
+              niz1.splice(niz1.indexOf(fr), 1);
             }
   
             if (fr === fr1) {
-              var a = niz1.indexOf(fr);
-              niz1.splice(a, 1);
+              niz1.splice(niz1.indexOf(fr), 1);
             }
   
           });
         });
   
-        niz1.forEach(function (suggested) {
+        niz1.forEach((suggested) => {
           const id = users[suggested - 1].id,
             firstName = users[suggested - 1].firstName,
             surname = users[suggested - 1].surname,
@@ -236,7 +233,7 @@ http.get('data.json')
 
             selectedObject.friends.forEach((id) => {
               if (fost === id) {
-                x = x + 1;
+                x += 1;
               }
 
             });
