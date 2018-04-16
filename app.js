@@ -129,136 +129,224 @@ http.get('data.json')
 
 
         // ---------------------------------------------- Direct friends Loop
-        selectedObject.friends.forEach((friend) => {
-          // console.log(singleUser);
-          const id = users[friend - 1].id,
-            firstName = users[friend - 1].firstName,
-            surname = users[friend - 1].surname,
-            friends = users[friend - 1].friends;
-          // Instantiate user
-          const user = new User(id, firstName, surname, friends);
-          // Instantiate UI
-          const ui = new UI();
-          // Select user
-          ui.selectUser(user);
+
+        users.forEach(u => {
+          if (selectedObject.friends.indexOf(u.id) !== -1) {
+            const user = new User(u.id, u.firstName, u.surname, u.friends);
+            // Instantiate UI
+            const ui = new UI();
+            // Select user
+            ui.selectUser(user);
+          }
         });
+
+
+
+        // selectedObject.friends.forEach((friend) => {
+        //   // console.log(singleUser);
+        //   const id = users[friend - 1].id,
+        //     firstName = users[friend - 1].firstName,
+        //     surname = users[friend - 1].surname,
+        //     friends = users[friend - 1].friends;
+        //   // Instantiate user
+        //   const user = new User(id, firstName, surname, friends);
+        //   // Instantiate UI
+        //   const ui = new UI();
+        //   // Select user
+        //   ui.selectUser(user);
+        // });
 
 
         // ------------------------------------------------- Friends of friends Loop
-        let niz = [];
-        selectedObject.friends.forEach((friends) => {
-          niz.push(users[friends - 1].id);
-        });
+        // let niz = [];
+        // selectedObject.friends.forEach((friends) => {
+        //   niz.push(users[friends - 1].id);
+        // });
 
-        let niz1 = [];
+        // let niz1 = [];
 
-        niz.forEach((friend) => {
-          users[friend - 1].friends.forEach((fr) => {
-            if (niz1.indexOf(fr) == -1) {
-              niz1.push(fr);
+        // niz.forEach((friend) => {
+        //   users[friend - 1].friends.forEach((fr) => {
+        //     if (niz1.indexOf(fr) == -1) {
+        //       niz1.push(fr);
+        //     }
+        //   });
+        // });
+
+        // niz1.forEach((fr) => {
+
+        //   if (fr == selectedId) {
+        //     niz1.splice(niz1.indexOf(fr), 1);
+        //   }
+
+        // });
+
+        // niz.forEach((fr1) => {
+        //   niz1.forEach((fr) => {
+
+        //     if (fr === selectedId) {
+        //       niz1.splice(niz1.indexOf(fr), 1);
+        //     }
+
+        //     if (fr === fr1) {
+        //       niz1.splice(niz1.indexOf(fr), 1);
+        //     }
+
+        //   });
+        // });
+
+        // niz1.forEach((suggested) => {
+        //   const id = users[suggested - 1].id,
+        //     firstName = users[suggested - 1].firstName,
+        //     surname = users[suggested - 1].surname,
+        //     friends = users[suggested - 1].friends;
+        //   // Instantiate user
+        //   const user = new User(id, firstName, surname, friends);
+        //   // Instantiate UI
+        //   const ui = new UI();
+        //   // Select user
+        //   ui.selectDirectFriends(user);
+        // });
+
+
+        let friendsOfFriends = [];
+        // loop trough all users
+        users.forEach(user => {
+          // go to user friend list
+          user.friends.forEach(friend_id => {
+            // get ids of friends of friend who are in selectedObject.friends
+            // and not equal to selectedObject.id
+            // and who is not in array already
+            if (
+              selectedObject.friends.indexOf(user.id) !== -1 &&
+              selectedObject.id !== friend_id &&
+              friendsOfFriends.indexOf(friend_id) === -1
+            ) {
+              friendsOfFriends.push(friend_id);
             }
           });
         });
+        // remove direct
+        friendsOfFriends = friendsOfFriends.filter(fri => {
+          return selectedObject.friends.indexOf(fri) === -1;
+        });
 
-        niz1.forEach((fr) => {
 
-          if (fr == selectedId) {
-            niz1.splice(niz1.indexOf(fr), 1);
+        users.forEach(u => {
+          if (friendsOfFriends.indexOf(u.id) !== -1) {
+            const user = new User(u.id, u.firstName, u.surname, u.friends);
+            // Instantiate UI
+            const ui = new UI();
+            // Select user
+            ui.selectDirectFriends(user);
           }
-
+          
         });
-
-        niz.forEach((fr1) => {
-          niz1.forEach((fr) => {
-
-            if (fr === selectedId) {
-              niz1.splice(niz1.indexOf(fr), 1);
-            }
-
-            if (fr === fr1) {
-              niz1.splice(niz1.indexOf(fr), 1);
-            }
-
-          });
-        });
-
-        niz1.forEach((suggested) => {
-          const id = users[suggested - 1].id,
-            firstName = users[suggested - 1].firstName,
-            surname = users[suggested - 1].surname,
-            friends = users[suggested - 1].friends;
-          // Instantiate user
-          const user = new User(id, firstName, surname, friends);
-          // Instantiate UI
-          const ui = new UI();
-          // Select user
-          ui.selectDirectFriends(user);
-        });
-
 
         // ------------------------------------------------ Suggested Friends Loop
 
-        let arr = [];
-        users.forEach((user) => {
-          if (user.friends.length > 1) {
-            arr.push(user);
-          }
-        });
+        // let arr = [];
+        // users.forEach((user) => {
+        //   if (user.friends.length > 1) {
+        //     arr.push(user);
+        //   }
+        // });
 
-        let arr1 = [];
-        arr.forEach((user) => {
+        // let arr1 = [];
+        // arr.forEach((user) => {
 
-          let x = 0;
-          user.friends.forEach((id) => {
+        //   let x = 0;
+        //   user.friends.forEach((id) => {
 
-            if (selectedId === id) {
-              x = 1;
+        //     if (selectedId == id) {
+        //       x = 1;
+        //     }
+
+        //   });
+
+        //   if (x === 0) {
+        //     arr1.push(user);
+        //   }
+
+        // });
+
+        // arr1.splice(arr1.indexOf(selectedObject), 1);
+
+
+        // let suggestedFriendsArray = [];
+        // arr1.forEach((user) => {
+
+        //   let x = 0;
+        //   user.friends.forEach((fost) => {
+
+        //     selectedObject.friends.forEach((id) => {
+        //       if (fost === id) {
+        //         x += 1;
+        //       }
+
+        //     });
+
+        //   });
+
+        //   if (x > 1) {
+        //     suggestedFriendsArray.push(user.id);
+        //   }
+
+        // });
+
+        // suggestedFriendsArray.forEach((suggested) => {
+        //   const id = users[suggested - 1].id,
+        //     firstName = users[suggested - 1].firstName,
+        //     surname = users[suggested - 1].surname,
+        //     friends = users[suggested - 1].friends;
+        //   // Instantiate user
+        //   const user = new User(id, firstName, surname, friends);
+        //   // Instantiate UI
+        //   const ui = new UI();
+        //   // Select user
+        //   ui.selectSuggestedFriends(user);
+        // });
+
+        console.log(friendsOfFriends);
+
+
+        let suggestedFriends = [];
+        // loop trough all users
+        users.forEach(user => {
+          // go to user friend list
+          user.friends.forEach(friend_id => {
+            // get ids of friends of friend who are in selectedObject.friends
+            // and not equal to selectedObject.id
+            // and who is not in array already
+            if (
+              selectedObject.friends.indexOf(user.id) !== -1 &&
+              selectedObject.id !== friend_id &&
+              suggestedFriends.indexOf(friend_id) === -1
+              // && users.suggestedFriends.friends.length > 2
+            ) {
+              suggestedFriends.push(friend_id);
             }
-
           });
+        });
+        // remove direct
+        suggestedFriends = suggestedFriends.filter(fri => {
+          return selectedObject.friends.indexOf(fri) === -1;
+        });
 
-          if (x === 0) {
-            arr1.push(user);
+
+        users.forEach(u => {
+          if (suggestedFriends.indexOf(u.id) !== -1) {
+            const user = new User(u.id, u.firstName, u.surname, u.friends);
+            // Instantiate UI
+            const ui = new UI();
+            // Select user
+            ui.selectSuggestedFriends(user);
           }
-
+          
         });
 
-        arr1.splice(arr1.indexOf(selectedObject), 1);
 
 
-        let suggestedFriendsArray = [];
-        arr1.forEach((user) => {
-
-          let x = 0;
-          user.friends.forEach((fost) => {
-
-            selectedObject.friends.forEach((id) => {
-              if (fost === id) {
-                x += 1;
-              }
-
-            });
-
-          });
-
-          if (x > 1) {
-            suggestedFriendsArray.push(user.id);
-          }
-
-        });
-
-        suggestedFriendsArray.forEach((suggested) => {
-          const id = users[suggested - 1].id,
-            firstName = users[suggested - 1].firstName,
-            surname = users[suggested - 1].surname,
-            friends = users[suggested - 1].friends;
-          // Instantiate user
-          const user = new User(id, firstName, surname, friends);
-          // Instantiate UI
-          const ui = new UI();
-          // Select user
-          ui.selectSuggestedFriends(user);
-        });
 
       }
 
