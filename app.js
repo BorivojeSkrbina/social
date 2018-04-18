@@ -89,7 +89,7 @@ http.get('data.json')
       ui.addUser(user);
     });
 
-    
+
     // ----------------------------------------------- Event Listener for Selecting User
     document.getElementById('book-list').addEventListener('click', (e) => {
 
@@ -119,7 +119,7 @@ http.get('data.json')
 
 
 
-        // ---------------------------------------------- Direct friends Loop
+        // ---------------------------------------------- Direct friends
 
         users.forEach(u => {
           if (selectedObject.friends.indexOf(u.id) !== -1) {
@@ -131,7 +131,7 @@ http.get('data.json')
           }
         });
 
-        // ------------------------------------------------- Friends of friends Loop
+        // ------------------------------------------------- Friends of friends
 
 
         let friendsOfFriends = [];
@@ -143,11 +143,8 @@ http.get('data.json')
             // and not equal to selectedObject.id
             // and who is not in array already
             if (
-              // Dodaj ako izabrani user zna trenutnog usera
               selectedObject.friends.indexOf(user.id) !== -1 &&
-              // Nemoj da dodas ako prijatelji trenutnog usera znaju izabranog usera
               selectedObject.id !== friend_id &&
-              // Nemoj da dodas ako se vec nalazi u nizu
               friendsOfFriends.indexOf(friend_id) === -1
             ) {
               friendsOfFriends.push(friend_id);
@@ -171,7 +168,7 @@ http.get('data.json')
 
         });
 
-        // ------------------------------------------------ Suggested Friends Loop
+        // ------------------------------------------------ Suggested Friends
 
         let arr = [];
         // Niz svih usera sa 2 i vise prijatelja
@@ -181,7 +178,6 @@ http.get('data.json')
           }
         });
 
-        console.log(arr);
 
         let arr1 = [];
         // Niz usera koji ne znaju izabranog usera
@@ -190,7 +186,7 @@ http.get('data.json')
           let x = 0;
           user.friends.forEach((id) => {
             // Gleda da li user zna izabranog usera i poveceva x
-            if (selectedId == id) {
+            if (selectedId === id) {
               x = 1;
             }
 
@@ -242,45 +238,6 @@ http.get('data.json')
           // Select user
           ui.selectSuggestedFriends(user);
         });
-
-
-
-        // let suggestedFriends = [];
-        // // loop trough all users
-        // users.forEach(user => {
-        //   // go to user friend list
-        //   user.friends.forEach(friend_id => {
-        //     // get ids of friends of friend who are in selectedObject.friends
-        //     // and not equal to selectedObject.id
-        //     // and who is not in array already
-        //     if (
-        //       selectedObject.friends.indexOf(user.id) !== -1 &&
-        //       selectedObject.id !== friend_id &&
-        //       suggestedFriends.indexOf(friend_id) === -1
-        //       // && users.suggestedFriends.friends.length > 2
-        //     ) {
-        //       suggestedFriends.push(friend_id);
-        //     }
-        //   });
-        // });
-        // // remove direct
-        // suggestedFriends = suggestedFriends.filter(fri => {
-        //   return selectedObject.friends.indexOf(fri) === -1;
-        // });
-
-
-        // users.forEach(u => {
-        //   if (suggestedFriends.indexOf(u.id) !== -1) {
-        //     const user = new User(u.id, u.firstName, u.surname, u.friends);
-        //     // Instantiate UI
-        //     const ui = new UI();
-        //     // Select user
-        //     ui.selectSuggestedFriends(user);
-        //   }
-
-        // });
-
-
 
 
       }
