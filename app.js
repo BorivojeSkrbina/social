@@ -171,7 +171,6 @@ http.get('data.json')
         // ------------------------------------------------ Suggested Friends
 
         let arr = [];
-        // Niz svih usera sa 2 i vise prijatelja
         users.forEach((user) => {
           if (user.friends.length > 1) {
             arr.push(user);
@@ -180,37 +179,31 @@ http.get('data.json')
 
 
         let arr1 = [];
-        // Niz usera koji ne znaju izabranog usera
         arr.forEach((user) => {
 
           let x = 0;
           user.friends.forEach((id) => {
-            // Gleda da li user zna izabranog usera i poveceva x
             if (selectedId === id) {
               x = 1;
             }
 
           });
 
-          // Ukoliko ga ne zna dodaje ga u niz
           if (x === 0) {
             arr1.push(user);
           }
 
         });
 
-        // Izbacuje iz niza selektovanog usera
         arr1.splice(arr1.indexOf(selectedObject), 1);
 
 
         let suggestedFriendsArray = [];
 
-        // Gleda da li user zna direktnog prijatelja izabranog usera
         arr1.forEach((user) => {
 
           let x = 0;
           user.friends.forEach((fost) => {
-            // Uporedjivanje direktnih prijatelja sa prijateljima izabranog usera
             selectedObject.friends.forEach((id) => {
               if (fost === id) {
                 x += 1;
@@ -219,26 +212,22 @@ http.get('data.json')
             });
 
           });
-          // Ukoliko je broj 2 ili vise dodaj u konacni niz
           if (x > 1) {
             suggestedFriendsArray.push(user.id);
           }
 
         });
 
-        suggestedFriendsArray.forEach((suggested) => {
-          const id = users[suggested - 1].id,
-            firstName = users[suggested - 1].firstName,
-            surname = users[suggested - 1].surname,
-            friends = users[suggested - 1].friends;
-          // Instantiate user
-          const user = new User(id, firstName, surname, friends);
-          // Instantiate UI
-          const ui = new UI();
-          // Select user
-          ui.selectSuggestedFriends(user);
-        });
+        users.forEach(u => {
+          if (suggestedFriendsArray.indexOf(u.id) !== -1) {
+            const user = new User(u.id, u.firstName, u.surname, u.friends);
+            // Instantiate UI
+            const ui = new UI();
+            // Select user
+            ui.selectSuggestedFriends(user);
+          }
 
+        });
 
       }
 
